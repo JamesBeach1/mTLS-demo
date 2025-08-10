@@ -1,0 +1,54 @@
+server:
+  port: 8444
+  ssl:
+    bundle: server
+    client-auth: need
+spring:
+  ssl:
+    bundle:
+      jks:
+        server:
+          keystore:
+            location: classpath:certs/service-b-keystore.p12
+            password: changeit
+            type: PKCS12
+          truststore:
+            location: classpath:certs/truststore.p12
+            password: changeit
+            type: PKCS12
+        client:
+          keystore:
+            location: classpath:certs/service-b-keystore.p12
+            password: changeit
+            type: PKCS12
+          truststore:
+            location: classpath:certs/truststore.p12
+            password: changeit
+            type: PKCS12
+management:
+  server:
+    port: 8081
+    ssl:
+      enabled: false
+  endpoints:
+    web:
+      exposure:
+        include: health,info,readiness,liveness
+  endpoint:
+    health:
+      show-details: always
+      probes:
+        enabled: true
+      group:
+        liveness:
+          include: livenessState
+        readiness:
+          include: readinessState
+springdoc:
+  api-docs:
+    enabled: true
+  swagger-ui:
+    enabled: true
+  show-actuator: false
+
+
